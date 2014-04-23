@@ -42,6 +42,7 @@ namespace MentorMe.Filters
                 }
                 catch (Exception ex)
                 {
+                    LogWritter.LogWritterClass.WriteLog(ex);
                     throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
                 }
             }

@@ -12,6 +12,8 @@ using MentorMe.Filters;
 using MentorMe.Models;
 using Facebook;
 using Facebook.Reflection;
+using LogWritter;
+
 
 namespace MentorMe.Controllers
 {
@@ -37,14 +39,22 @@ namespace MentorMe.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            try
             {
-                return RedirectToLocal(returnUrl);
+                if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+
+                // If we got this far, something failed, redisplay form
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            }
+            catch (Exception e)
+            {
+               LogWritterClass.WriteLog(e);
             }
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
+                return View(model);
         }
 
         //
@@ -112,6 +122,7 @@ namespace MentorMe.Controllers
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                    LogWritter.LogWritterClass.WriteLog(e);
                 }
             }
 
@@ -183,9 +194,10 @@ namespace MentorMe.Controllers
                     {
                         changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         changePasswordSucceeded = false;
+                        LogWritter.LogWritterClass.WriteLog(e);
                     }
 
                     if (changePasswordSucceeded)
@@ -217,8 +229,9 @@ namespace MentorMe.Controllers
                         return RedirectToAction("Index", "Home");
                         //return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
+                        LogWritter.LogWritterClass.WriteLog(e);
                         ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
                     }
                 }

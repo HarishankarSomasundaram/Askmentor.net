@@ -98,6 +98,7 @@ namespace MentorMe
             }
             catch (Exception exception)
             {
+                LogWritter.LogWritterClass.WriteLog(exception);
                 return new AuthenticationResult(exception);
             }
         }        
