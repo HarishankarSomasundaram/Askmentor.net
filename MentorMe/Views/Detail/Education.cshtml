@@ -25,7 +25,7 @@
             @Html.LabelFor(model => model.EducationMode)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.EducationMode, new SelectList(Model.Modes), "--Select--")
+            @Html.DropDownListFor(model => model.EducationMode, new SelectList(Model.Modes, "ModeID", "Mode"), "--Select--")
         </div>
 
         <div class="editor-label">
@@ -60,7 +60,7 @@
             @Html.LabelFor(model => model.PostGraduationEducationMode)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.PostGraduationEducationMode, new SelectList(Model.Modes), "--Select--")
+            @Html.DropDownListFor(model => model.PostGraduationEducationMode, new SelectList(Model.Modes, "ModeID", "Mode"), "--Select--")
         </div>
 
         <div class="editor-label">
@@ -95,7 +95,7 @@
             @Html.LabelFor(model => model.DoctorateEducationMode)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.DoctorateEducationMode, new SelectList(Model.Modes), "--Select")
+            @Html.DropDownListFor(model => model.DoctorateEducationMode, new SelectList(Model.Modes, "ModeID", "Mode"), "--Select")
         </div>
 
         <div class="editor-label">

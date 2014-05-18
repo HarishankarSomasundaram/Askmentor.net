@@ -123,7 +123,8 @@ namespace MentorMe.Controllers
         public ActionResult Education()
         {
             ModelEducation oEducation = new ModelEducation();
-            var oUser = this.model.UserProfiles.Where(x => x.UserName == User.Identity.Name).FirstOrDefault();
+            var user = User.Identity.Name;
+            var oUser = this.model.UserProfiles.Where(x => x.UserName == user).FirstOrDefault();
             if (oUser != null)
             {
                 var objEducation = this.model.Education.Where(x => x.UserId == oUser.UserId).FirstOrDefault();

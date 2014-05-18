@@ -282,7 +282,7 @@ namespace MentorMe.Models
     {
         private string _Graduation;
         private string _EducationMode;
-        private List<string> _Modes;
+        private List<ModeClass> _Modes;
         private string _Specialization;
         private string _University;
         private string _YearComplete;
@@ -312,16 +312,24 @@ namespace MentorMe.Models
             }
         }
 
+        public class ModeClass
+        {
+            public int ModeID { get; set; }
+            public string Mode { get; set; }
+        }
+
         public string EducationMode
         {
             get { return this._EducationMode; }
             set { this._EducationMode = value; }
         }
 
-        public List<string> Modes
+        public List<ModeClass> Modes
         {
-            get { return this._Modes; }
-            set { this._Modes = new List<string>() { "Full Time", "Part Time", "Correspond" }; }
+            get { return this._Modes = new List<ModeClass>() { new ModeClass { ModeID = 1, Mode = "Full Time" }, new ModeClass { ModeID = 2, Mode = "Part Time" }, new ModeClass { ModeID = 3, Mode = "Correspond" } }; }
+            set { this._Modes = value; }
+            //set { this._Modes = new List<string>() { "Full Time", "Part Time", "Correspond" }; }
+          
         }
 
         [Display(Name = "Specialization")]
